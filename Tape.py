@@ -28,3 +28,28 @@ class Tape(object):
 
     def ReadFromTape(self):
         return self.__payload[self.__head]
+
+#Attributes access
+    @property
+    def blank(self):
+        return self.__blank
+
+    @blank.setter
+    def blank(self, symbol):
+        self.__blank = symbol
+        
+    @property
+    def payload(self):
+        return self.__payload
+    @property
+    def head(self):
+        return self.__head
+#Magic
+    def __str__(self):
+        return str(self.__payload)
+
+    def __eq__(self,other):
+        for i in range(0,len(self.payload)-1):
+            if self.__payload[i] != other.payload[i]:
+                False
+        return True

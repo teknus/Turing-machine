@@ -10,9 +10,15 @@ class Machine:
         ):
         self.__leftSymbol = leftSymbol
         self.__rightSymbol = rightSymbol
-        self.__actualState = listOfStates
         self.__listOfStates = listOfStates
         self.__commands = commands
         self.__tape = tape
-    def run():
+
+    def run(self):
+        state = (self.__listOfStates[0],self.__tape.blank)
+        symbol = self.__tape.ReadFromTape()
+        while True:
+            command = self.__commands[state]
+            if command != None:
+                return self.__tape
         pass
