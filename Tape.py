@@ -28,7 +28,7 @@ class Tape(object):
 
     def ReadFromTape(self):
         return self.__payload[self.__head]
-        
+
 #Attributes access
     @property
     def blank(self):
@@ -37,8 +37,7 @@ class Tape(object):
     @blank.setter
     def blank(self, symbol):
         self.__blank = symbol
-
-    
+        
     @property
     def payload(self):
         return self.__payload
