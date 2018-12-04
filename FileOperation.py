@@ -1,15 +1,27 @@
 from Machine import Machine
 from Tape import Tape
 
-payload = "_ 1 _"
+i = None
+states = None
+alphabet = None
+input_data = None
+commands = None
+with open("instance.tm") as file:
+    i = int(file.readline())
+    states = file.readline().split()
+    alphabet = file.readline()
+    input_data = file.readline()
+    commands = dict()
+    while i > 0:
+        line = file.readline()
+        slpited_line = line.strip().split(" ")
+        commands[(slpited_line[0],slpited_line[1].rstrip())] = (slpited_line[2],slpited_line[3])
+        i -= 1
+
+payload = input_data
 
 def createTape():
-    return Tape(payload,['0','1'],blank="_")
+    return Tape(payload,alphabet,blank="_")
 payloadLen = payload.split()
-states = ["q1","q2"]
-commands = {
-    ("q1","_"):("R","q1"),
-    ("q1","1"):("_","q2")
-}
 machine = Machine(states,commands,createTape())
-print(machine.run())
+machine.run()

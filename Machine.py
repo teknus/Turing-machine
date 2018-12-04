@@ -1,6 +1,7 @@
 from typing import List, Dict, Tuple
 from Tape import Tape
-
+from time import sleep
+sleepTime = 1
 class Machine:
     def __init__(self,listOfStates :List[str] ,
         commands:Dict[Tuple[str,str],Tuple[str,str]],
@@ -14,19 +15,21 @@ class Machine:
         self.__commands = commands
         self.__tape = tape
 
-    def runCommand(self, command, symbol):
+    def runCommand(self, state, command, symbol):
+        print("Execute Command")
         if command[0] == "R":
-#            print("Right")
+            print(self.__tape.head,state[0],"Right",symbol)
             self.__tape.moveHeadToRight()
             symbol = self.__tape.readFromTape()
         elif command[0] == "L":
-#            print("Left")
+            print(self.__tape.head,state[0],"Left",symbol)
             self.__tape.moveHeadToLeft()
             symbol = self.__tape.readFromTape()
         else:
- #           print("Write")
+            print(self.__tape.head,state[0],"Write",symbol)
             self.__tape.writeOnTape(command[0])
             symbol = command[0]
+        sleep(sleepTime)
         return symbol
     
     def verifyState(self,state):
@@ -42,8 +45,14 @@ class Machine:
         symbol = self.__tape.readFromTape()
         while interations < 1000:
             interations += 1
-            command, symbol = self.__commands[state]
-            symbol = self.runCommand(command,symbol)
+            command = self.__commands[state]
+            symbol = self.runCommand(state,command,symbol)
+            print(self.__tape)
             state = (command[1], symbol)
+            sleep(sleepTime)
+            print(command[1],symbol)
             if not self.verifyState(state):
-                return self.__tape
+                sleep(sleepTime)
+                print("Final Tape")
+                print(self.__tape.head,self.__tape)
+                return

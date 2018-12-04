@@ -10,10 +10,10 @@ payloadLen = payload.split()
 def createMachine():
     states = ["q1","q2"]
     commands = {
-        ("q1","1"):("R","q2"),
-        ("q1","_"):("R","q1")
+        ("q1","_"):("R","q1"),
+        ("q1","1"):("_","q2")
     }
     return Machine(states,commands,createTape())
 
 def test_Run():
-    assert createMachine().run() == createTape() 
+    assert createMachine().run().readFromTape() == "_"

@@ -52,3 +52,6 @@ class Tape(object):
             if self.__payload[i] != other.payload[i]:
                 False
         return True
+    
+    def __ne__(self,other):
+        return not self == other
