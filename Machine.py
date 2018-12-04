@@ -13,6 +13,6 @@ class Machine:
         self.__actualState = listOfStates
         self.__listOfStates = listOfStates
         self.__commands = commands
-        self.__tape = 
+        self.__tape = tape
     def run():
         pass
