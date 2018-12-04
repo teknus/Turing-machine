@@ -11,7 +11,6 @@ class Tape(object):
 
     def moveHeadToRight(self):
         self.__head += 1
-        print(self.__head,self.__highestIndex)
         if self.__head >= self.__highestIndex:
             self.__payload = self.__payload + [self.__blank]
             self.__highestIndex = len(self.__payload)
@@ -24,9 +23,9 @@ class Tape(object):
             self.__head = 0
 
     def writeOnTape(self, symbol: str):
-        (self.__head,self.__payload)
+        self.__payload[self.__head] = symbol
 
-    def ReadFromTape(self):
+    def readFromTape(self):
         return self.__payload[self.__head]
 
 #Attributes access

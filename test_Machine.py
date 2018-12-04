@@ -10,8 +10,8 @@ payloadLen = payload.split()
 def createMachine():
     states = ["q1","q2"]
     commands = {
-        ("q1","1"):("q2","R"),
-        ("q1","_"):("q1","R")
+        ("q1","1"):("R","q2"),
+        ("q1","_"):("R","q1")
     }
     return Machine(states,commands,createTape())
 

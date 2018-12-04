@@ -8,26 +8,26 @@ payloadLen = payload.split()
 def test_leftCreation():
     tape = create()
     tape.moveHeadToLeft()
-    assert tape.ReadFromTape() == "_"
+    assert tape.readFromTape() == "_"
 
 def test_rightMove():
     tape = create()
     tape.moveHeadToRight()
-    assert tape.ReadFromTape() == "1"
+    assert tape.readFromTape() == "1"
 
 def test_MoveInfinityLeft():
     tape = create()
     i = 2
     for j in range(i):
         tape.moveHeadToLeft()
-    assert tape.ReadFromTape() == "_"
+    assert tape.readFromTape() == "_"
 
 def test_MoveInfinityRigth():
     tape = create()
     i = 5
     for j in range(i):
         tape.moveHeadToRight()
-    assert tape.ReadFromTape() == "_"
+    assert tape.readFromTape() == "_"
 
 def test_MoveRightAndLeft():
     tape = create()
@@ -36,4 +36,4 @@ def test_MoveRightAndLeft():
     tape.moveHeadToRight()
     tape.moveHeadToLeft()
     tape.moveHeadToLeft()
-    assert tape.ReadFromTape() == "1"
+    assert tape.readFromTape() == "1"
