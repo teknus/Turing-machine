@@ -28,10 +28,16 @@ class Tape(object):
 
     def ReadFromTape(self):
         return self.__payload[self.__head]
-    
+        
+#Attributes access
     @property
     def blank(self):
         return self.__blank
+
+    @blank.setter
+    def blank(self, symbol):
+        self.__blank = symbol
+
     
     @property
     def payload(self):
@@ -39,7 +45,7 @@ class Tape(object):
     @property
     def head(self):
         return self.__head
-    
+#Magic
     def __str__(self):
         return str(self.__payload)
 
