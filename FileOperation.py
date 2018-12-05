@@ -1,5 +1,7 @@
 from Machine import Machine
 from Tape import Tape
+from time import sleep
+sleepTime = 1
 
 i = None
 states = None
@@ -25,3 +27,4 @@ def createTape():
 payloadLen = payload.split()
 machine = Machine(states,commands,createTape())
 machine.run()
+    

@@ -39,13 +39,16 @@ class Tape(object):
         
     @property
     def payload(self):
-        return self.__payload
+        return self.__payload[:]
     @property
     def head(self):
         return self.__head
 #Magic
     def __str__(self):
-        return str(self.__payload)
+        return str(self.__payload[:])
+    
+    def __repr__(self):
+            return str(self.__payload[:])
 
     def __eq__(self,other):
         for i in range(0,len(self.payload)-1):
