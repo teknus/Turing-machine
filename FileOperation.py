@@ -2,6 +2,8 @@ from Machine import Machine
 from Tape import Tape
 from time import sleep
 sleepTime = 1
+import os
+
 
 i = None
 states = None
@@ -26,5 +28,22 @@ def createTape():
     return Tape(payload,alphabet,blank="_")
 payloadLen = payload.split()
 machine = Machine(states,commands,createTape())
-machine.run()
-    
+for s in machine.run():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(
+        """
+         Estado Atual: {0}
+         Lendo da Fita: {1}
+         Posicção do Cabeçote: {2}
+         Fita: {3}
+         Execudanto: {4}
+         Próximo Estado: {5}
+         """.format(
+                    s["state"][0],
+                    s["state"][1],
+                    s["headPosition"],
+                    s["tape"],
+                    s["exec"]['instruction'][0],
+                    s["exec"]['instruction'][1]
+            )
+    )

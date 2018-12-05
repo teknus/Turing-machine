@@ -1,9 +1,9 @@
 from typing import List, Dict, Tuple
 from Tape import Tape
+from copy import copy
 
 from time import sleep
-sleepTime = 1.5
-timeOnPrint = 1
+sleepTime = 1
 
 class Machine:
     def __init__(self,listOfStates :List[str] ,
@@ -20,24 +20,17 @@ class Machine:
         self.__return = list()
 
     def runCommand(self, state, command, symbol):
-        print("\nExecutando ↪ Ação | Próximo Estado: ", command[0],command[1])
         sleep(sleepTime)
         if command[0] == "R":
             self.__tape.moveHeadToRight()
             symbol = self.__tape.readFromTape()
-            print("Posição cabeçote:  ", self.__tape.head)
-            sleep(timeOnPrint)
         elif command[0] == "L":
             self.__tape.moveHeadToLeft()
             symbol = self.__tape.readFromTape()
-            print("Posição cabeçote:  ", self.__tape.head)
-            sleep(timeOnPrint)
         else:
             self.__tape.writeOnTape(command[0])
             symbol = command[0]
-            print("Posição cabeçote:  ", self.__tape.head)
-            sleep(timeOnPrint)
-        return symbol
+        return symbol, {"instruction":command,"headPosition":copy(self.__tape.head)}
     
     def verifyState(self,state):
         ret = False
@@ -45,6 +38,10 @@ class Machine:
             if (key,value) == state:
                 ret = True
         return ret
+
+    def show(self, arg):
+        #print(*arg)
+        self.__return.append(arg)
 
     def run(self):
         interations = 0
@@ -54,17 +51,11 @@ class Machine:
             sleep(sleepTime)
             interations += 1
             command = self.__commands[state]
-            print("Estado | leitura atual: ", state[0]," ",state[1])
-            sleep(timeOnPrint)
-            print("Fita: ", self.__tape.payload)
-            sleep(timeOnPrint)
-            print("Posição do cabeçote: ",self.__tape.head)
-            sleep(timeOnPrint)
-            symbol = self.runCommand(state,command,symbol)
+            instruction = {"instruction":command,"headPosition":self.__tape.head}
+            yield {"state":state,"tape":self.__tape.payload,"headPosition":self.__tape.head,"exec":instruction}
+            symbol, instruction = self.runCommand(state,command,symbol)
             state = (command[1], symbol)
             sleep(sleepTime)
             if not self.verifyState(state):
-                sleep(sleepTime)
-                print("Final Tape", self.__tape, "\nCabeçote: ",self.__tape.head,"\nEstado Atual: ", state[0]," ",state[1])
-                return
-        print("Final Tape", self.__tape, "\nCabeçote: ",self.__tape.head,"Estado Atual: ", state[0]," ",state[1])
+                yield {"state":state,"tape":self.__tape.payload,"headPosition":self.__tape.head,"exec":{"instruction":("Exit",command[1]),"headPosition":self.__tape.head}}
+                return 
